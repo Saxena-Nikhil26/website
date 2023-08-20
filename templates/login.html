@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}
+Login
+{% endblock %}
+{% block content %}
+<form method="POST">
+    <h3 align="center">
+        Login
+    </h3>
+    <div class="form-group">
+        <label for="email">UserName</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Enter Username"/>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password"/>
+        <br/>
+        <div align="center">
+            <button class="btn btn-primary" type="submit">Login</button>
+<!--            <a class="btn btn-primary" href="{{url_for('sign_up')}}">Sign Up</a>-->
+        </div>
+    </div>
+</form>
+{% endblock %}

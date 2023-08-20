@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+          crossorigin="anonymous"
+    />
+    <title>{% block title %} {% endblock %}</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="/home">Home</a>
+                    {% if 'username' in session %}
+                        <a class="nav-item nav-link" href="/logout">Logout</a>
+                        <a class="nav-item nav-link" href="/posts/{{session['username']}}">{{session['username']}}</a>
+                    {% else %}
+                        <a class="nav-item nav-link" href="/login">Login</a>
+                        <a class="nav-item nav-link" href="/sign-up">Sign Up</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category == 'error' %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{message}}
+                        <button type="button" class="btn btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% else %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{message}}
+                        <button type="button" class="btn btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div class="container">{% block content %}{% endblock %}</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous">
+    </script>
+</body>
+</html>

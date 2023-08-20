@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}
+{{username}}'s Posts
+{% endblock %}
+{% block content %}
+<h1 align="center">{% block header %}Posts{% endblock %}</h1>
+<div id="posts">
+    {% for post in posts %}
+        <div class="card border-dark">
+            <div class="card-header d-flex justify-content-between align-item-center">
+                <a href="/posts/{{post.author}}">{{post.author}}</a>
+                {% if post.author == session['username'] %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-small btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/delete-post/{{post.id}}" class="dropdown-item">Delete</a></li>
+                        <li><a href="/update/{{post.id}}" class="dropdown-item">Update</a></li>
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <div class="card-text">{{post.text}}</div>
+            </div>
+            <div class="card-footer text-muted">
+                {{post.data_created}}
+            </div>
+        </div>
+        <br/>
+    {% endfor %}
+    <br/>
+</div>
+{% block footer %}
+    {% if username == session['username'] %}
+        <div align="center">
+            <a href="/create-post"><button class="btn btn-primary btn-lg">Create a Post</button></a>
+        </div>
+    {% endif %}
+    <br/>
+    <div align="center">
+        <a href="/home"><button class="btn btn-primary btn-lg">Back</button></a>
+    </div>
+{% endblock %}
+{% endblock %}
